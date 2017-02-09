@@ -1,0 +1,2 @@
+class NonAnnotatedDependencyError(Exception):
+    pass

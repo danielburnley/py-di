@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from src.DI import DI
+from src.Exceptions.NonAnnotatedDependencyError import NonAnnotatedDependencyError
 
 
 class ClassWithNoDependencies:
@@ -16,6 +17,11 @@ class ClassWithTwoDependencies:
     def __init__(self, a: ClassWithNoDependencies, b: ClassWithNoDependencies):
         self.a = a
         self.b = b
+
+
+class ClassWithNonAnnotatedDependency:
+    def __init__(self, a):
+        self.a = a
 
 
 class ClassWithSingleDependencyWithDependency:
@@ -43,3 +49,6 @@ class TestDI(TestCase):
         self.assertIsInstance(cls, ClassWithSingleDependencyWithDependency)
         self.assertIsInstance(cls.a, ClassWithSingleDependency)
         self.assertIsInstance(cls.a.a, ClassWithNoDependencies)
+
+    def test_given_class_with_non_annotated_dependency_when_getting_instance_throw_exception(self):
+        self.assertRaises(NonAnnotatedDependencyError, DI.get_instance_of, ClassWithNonAnnotatedDependency)

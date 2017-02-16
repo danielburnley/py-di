@@ -26,5 +26,6 @@ class ToInject:
     self.b = param_two
 
 # sets instance_of_class to an instance of "ToInject"  
+DI = DI()
 instance_of_class = DI.get_instance_of(ToInject)
 ```
